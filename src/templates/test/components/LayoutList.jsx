@@ -5,7 +5,7 @@ export default function LayoutList({ informations }) {
     listStyle: "none",
     display: "flex",
     flexDirection: "column",
-    gap: "3rem",
+    gap: "2rem",
   };
 
   const infoTextStyle = {};

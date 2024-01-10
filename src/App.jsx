@@ -1,29 +1,26 @@
-import React, { useRef } from "react";
+import React from "react";
 import generatePDF from "react-to-pdf";
 import Navbar from "./Navbar";
 import ResumeBuilder from "./ResumeBuilder";
-import Resume from "./templates/test/Resume";
+import InfoState from "./Context/InfoState";
 
 export default function App() {
-  const targetRef = useRef();
+  const getTargetElement = () => document.getElementById("resume");
 
   const convertResumeToPdf = () => {
     const options = {
       filename: "resume.pdf",
-      html2canvas: { scale: 100 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    generatePDF(targetRef, options);
+    generatePDF(getTargetElement, options);
   };
 
   return (
     <div>
       <Navbar convertResumeToPdf={convertResumeToPdf} />
-      <ResumeBuilder>
-        <div ref={targetRef}>
-          <Resume />
-        </div>
-      </ResumeBuilder>
+      <InfoState>
+        <ResumeBuilder />
+      </InfoState>
     </div>
   );
 }

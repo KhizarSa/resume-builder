@@ -33,18 +33,18 @@ export default function FormBar() {
         {btnCreateIsActive ? (
           <>
             <Form
-              label="Personal Information"
+              label="Education Information"
               fields={[
-                { type: "text", placeholder: "First Name" },
-                { type: "text", placeholder: "Last Name" },
-                { type: "text", placeholder: "Profession" },
+                { type: "text", placeholder: "Start-Finish" },
+                { type: "text", placeholder: "Degree Name" },
+                { type: "text", placeholder: "University Name" },
               ]}
             />
             <Form
-              label="Professional Summary"
+              label="Contact Information"
               fields={[
                 { type: "text", placeholder: "Title" },
-                { type: "text", placeholder: "Profile Summary" },
+                { type: "text", placeholder: "Summary" },
               ]}
             />
             <Form

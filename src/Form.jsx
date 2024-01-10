@@ -1,28 +1,51 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./styles/Form.module.css";
-import FormField from "./FormField";
 import FormLabel from "./FormLabel";
 import Btn from "./Btn";
+import infoContext from "./Context/InfoContext";
 
 export default function Form({ label, fields }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [info, setInfo] = useState(fields.map(() => ""));
+  const { setEducation, setContact } = useContext(infoContext);
 
   function handleLabelClick() {
     setIsOpen((val) => !val);
   }
 
+  function handleInputChange(index, value) {
+    setInfo((prevInfo) => {
+      const newInfo = [...prevInfo];
+      newInfo[index] = value;
+      return newInfo;
+    });
+  }
+
+  function onSubmitInfo(e) {
+    e.preventDefault();
+
+    if (label.toLowerCase() === "education information")
+      setEducation((prev) => [...prev, info]);
+
+    if (label.toLowerCase() === "contact information")
+      setContact((prev) => [...prev, info]);
+  }
+
   return (
-    <form className={styles.formContainer}>
+    <form onSubmit={onSubmitInfo} className={styles.formContainer}>
       <FormLabel isOpen={isOpen} handleLabelClick={handleLabelClick}>
         {label}
       </FormLabel>
       {isOpen && (
         <div className={styles.formFieldsContainer}>
           {fields.map((field, i) => (
-            <FormField
+            <input
               key={i}
+              className={styles.formField}
               type={field.type}
               placeholder={field.placeholder}
+              value={info[i]}
+              onChange={(e) => handleInputChange(i, e.target.value)}
             />
           ))}
           <div className={styles.btnContainer}>

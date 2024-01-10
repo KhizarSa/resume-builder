@@ -3,14 +3,41 @@ import Box from "./components/Box";
 import UserDetails from "./components/UserDetails";
 import LayoutList from "./components/LayoutList";
 import InfoBox from "./components/InfoBox";
+import { useContext, useEffect, useState } from "react";
+import infoContext from "../../Context/InfoContext";
 
 export default function Resume() {
-  const educationInfo = [
-    ["2014-2019", "Degree Name", "University Name"],
-    ["2010-2013", "Degree Name", "University Name"],
-  ];
+  const [educationInfo, setEducationInfo] = useState([
+    ["Duration", "Degree Name", "University Name"],
+  ]);
+  const [contactInfo, setContactInfo] = useState([["Title", "Summary"]]);
 
-  const contactInfo = [["Phone", "+923308362123"]];
+  const { education, contact } = useContext(infoContext);
+
+  useEffect(
+    function () {
+      if (education.length !== 0) {
+        setEducationInfo(education);
+      }
+    },
+    [education]
+  );
+
+  useEffect(
+    function () {
+      if (contact.length !== 0) {
+        setContactInfo(contact);
+      }
+    },
+    [contact]
+  );
+
+  // const educationInfo = [
+  //   ["2014-2019", "Degree Name", "University Name"],
+  //   ["2010-2013", "Degree Name", "University Name"],
+  // ];
+
+  // const contactInfo = [["Phone", "+923308362123"]];
 
   const expInfo = [
     {
@@ -34,12 +61,16 @@ export default function Resume() {
       <img src="./img/person.jpg" className={styles.userImg} alt="Person" />
       <UserDetails firstName="David" lastName="St. Peter" job="UX Designer" />
       <div className={`${styles.containerLeft}`}>
-        <Box title="Education">
-          <LayoutList informations={educationInfo} />
-        </Box>
-        <Box title="Contact">
-          <LayoutList informations={contactInfo} />
-        </Box>
+        {educationInfo && (
+          <Box title="Education">
+            <LayoutList informations={educationInfo} />
+          </Box>
+        )}
+        {contactInfo && (
+          <Box title="Contact">
+            <LayoutList informations={contactInfo} />
+          </Box>
+        )}
       </div>
       <div className={styles.containerRight}>
         <Box title="Profile">

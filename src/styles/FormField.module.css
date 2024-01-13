@@ -8,3 +8,12 @@
   color: #848484;
   font-weight: 600;
 }
+
+.nonEditableField {
+  display: block;
+  font-weight: 600;
+  font-size: 1.3rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 1rem;
+  padding: 1rem;
+}

@@ -12,6 +12,11 @@
   transition: all 0.3s ease;
 }
 
+.btn svg {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
 .btn--primary {
   color: #fff;
   background-color: var(--color-primary);

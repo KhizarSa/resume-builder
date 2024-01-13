@@ -17,7 +17,6 @@ export default function Navbar({ convertResumeToPdf }) {
             width="256"
             height="256"
             viewBox="0 0 256 256"
-            className={`${styles.icon}  ${styles.iconDownload}`}
           >
             <path
               fill="currentColor"
@@ -32,7 +31,6 @@ export default function Navbar({ convertResumeToPdf }) {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className={`${styles.icon} ${styles.iconShare}`}
           >
             <path
               fill="currentColor"

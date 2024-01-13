@@ -16,7 +16,7 @@ export default function Resume() {
 
   useEffect(
     function () {
-      if (education.length !== 0) {
+      if (education !== null) {
         setEducationInfo(education);
       }
     },
@@ -25,7 +25,7 @@ export default function Resume() {
 
   useEffect(
     function () {
-      if (contact.length !== 0) {
+      if (contact !== null) {
         setContactInfo(contact);
       }
     },

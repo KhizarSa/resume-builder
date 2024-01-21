@@ -1,10 +1,18 @@
-export default function InfoBox({ children }) {
+import styles from "../Breakword.module.css";
+
+export default function InfoBox({ color = "#212121", children }) {
   const InfoStyle = {
     display: "flex",
     flexDirection: "column",
-    gap: "0.3rem",
-    color: "#212121",
+    gap: "0.8rem",
+    color: color,
+    width: "100%",
+    height: "100%",
   };
 
-  return <div style={InfoStyle}>{children}</div>;
+  return (
+    <div style={InfoStyle} className={styles.breakWord}>
+      {children}
+    </div>
+  );
 }

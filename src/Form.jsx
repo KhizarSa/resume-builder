@@ -5,28 +5,47 @@ import Btn from "./Btn";
 import infoContext from "./Context/InfoContext";
 import FormField from "./FormField";
 
-export default function Form({ label, fields }) {
+export default function Form({ label, fields, rows, cols, addMore = true }) {
   const [isOpen, setIsOpen] = useState(false);
   const [fieldCount, setFieldCount] = useState(1);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
 
-  const { education, contact, setEducation, setContact } =
-    useContext(infoContext);
+  const {
+    education,
+    contact,
+    experience,
+    setEducation,
+    setContact,
+    setExperience,
+    setSummary,
+    checkLabel,
+  } = useContext(infoContext);
 
   useEffect(
     function () {
-      if (
-        label.split(" ")[0].toLowerCase() === "education" &&
-        education === null
-      ) {
+      if (checkLabel(label, "education") && education === null) {
         setEducation([fields.map(() => "")]);
       }
 
-      if (label.split(" ")[0].toLowerCase() === "contact" && contact === null) {
+      if (checkLabel(label, "contact") && contact === null) {
         setContact([fields.map(() => "")]);
       }
+
+      if (checkLabel(label, "employment") && experience === null) {
+        setExperience([fields.map(() => "")]);
+      }
     },
-    [education, contact, setEducation, setContact, fields, label]
+    [
+      education,
+      contact,
+      experience,
+      setEducation,
+      setContact,
+      setExperience,
+      fields,
+      label,
+      checkLabel,
+    ]
   );
 
   function handleLabelClick() {
@@ -34,7 +53,7 @@ export default function Form({ label, fields }) {
   }
 
   function handleInputChange(groupIndex, index, value) {
-    if (label.split(" ")[0].toLowerCase() === "education") {
+    if (checkLabel(label, "education")) {
       setEducation((prevInfo) => {
         const newInfo = [...prevInfo];
         newInfo[groupIndex] = newInfo[groupIndex].map((item, i) =>
@@ -44,7 +63,7 @@ export default function Form({ label, fields }) {
       });
     }
 
-    if (label.split(" ")[0].toLowerCase() === "contact") {
+    if (checkLabel(label, "contact")) {
       setContact((prevInfo) => {
         const newInfo = [...prevInfo];
         newInfo[groupIndex] = newInfo[groupIndex].map((item, i) =>
@@ -53,12 +72,28 @@ export default function Form({ label, fields }) {
         return newInfo;
       });
     }
+
+    if (checkLabel(label, "employment")) {
+      setExperience((prevInfo) => {
+        const newInfo = [...prevInfo];
+        newInfo[groupIndex] = newInfo[groupIndex].map((item, i) =>
+          i === index ? value : item
+        );
+        return newInfo;
+      });
+    }
+
+    if (checkLabel(label, "summary")) {
+      setSummary(value);
+    }
   }
 
   function addMoreField() {
+    if (checkLabel(label, "summary")) return;
+
     setFieldCount((count) => count + 1);
 
-    if (label.split(" ")[0].toLowerCase() === "education") {
+    if (checkLabel(label, "education")) {
       setEducation((prevInfo) => {
         const newInfo = [...prevInfo];
         newInfo.push(fields.map(() => ""));
@@ -66,8 +101,16 @@ export default function Form({ label, fields }) {
       });
     }
 
-    if (label.split(" ")[0].toLowerCase() === "contact") {
+    if (checkLabel(label, "contact")) {
       setContact((prevInfo) => {
+        const newInfo = [...prevInfo];
+        newInfo.push(fields.map(() => ""));
+        return newInfo;
+      });
+    }
+
+    if (checkLabel(label, "employment")) {
+      setEducation((prevInfo) => {
         const newInfo = [...prevInfo];
         newInfo.push(fields.map(() => ""));
         return newInfo;
@@ -95,7 +138,10 @@ export default function Form({ label, fields }) {
                     groupIndex={i}
                     index={j}
                     editable={editable}
+                    label={label}
                     type={field.type}
+                    rows={rows || null}
+                    cols={cols || null}
                     placeholder={field.placeholder}
                     onHandleInputChange={handleInputChange}
                   />
@@ -103,7 +149,7 @@ export default function Form({ label, fields }) {
               </div>
             );
           })}
-          {editable && (
+          {editable && addMore && (
             <span onClick={addMoreField} className={styles.addMoreBtn}>
               Add more +
             </span>

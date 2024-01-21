@@ -1,4 +1,5 @@
 import InfoBox from "./InfoBox";
+import styles from "../Breakword.module.css";
 
 export default function LayoutList({ informations }) {
   const layoutListStyle = {
@@ -11,7 +12,7 @@ export default function LayoutList({ informations }) {
   const infoTextStyle = {};
 
   return (
-    <ul style={layoutListStyle}>
+    <ul style={layoutListStyle} className={styles.breakWord}>
       {informations.map((info, i) => {
         return (
           <InfoBox key={i}>

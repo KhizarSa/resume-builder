@@ -33,6 +33,13 @@ export default function FormBar() {
         {btnCreateIsActive ? (
           <>
             <Form
+              label="Summary Information"
+              fields={[{ type: "textarea", placeholder: "Summary" }]}
+              rows="6"
+              cols="10"
+              addMore={false}
+            />
+            <Form
               label="Education Information"
               fields={[
                 { type: "text", placeholder: "Start-Finish" },
@@ -50,10 +57,13 @@ export default function FormBar() {
             <Form
               label="Employment History"
               fields={[
-                { type: "text", placeholder: "Job Title" },
-                { type: "text", placeholder: "Employer" },
-                { type: "text", placeholder: "City" },
+                { type: "text", placeholder: "Duration" },
+                { type: "text", placeholder: "Company Name" },
+                { type: "text", placeholder: "Job Role" },
+                { type: "textarea", placeholder: "Description" },
               ]}
+              rows="6"
+              cols="10"
             />
           </>
         ) : (
